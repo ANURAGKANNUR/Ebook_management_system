@@ -16,18 +16,18 @@ python manage.py runserver
 username: admin
 password : admin@123
 
-# registreed user
+# registered user
 
 username: anurag
 password : anurag123
 
 
-# to test the APIs
+# to test the APIs of whole project
 
 python manage.py test
 
 
-APIs
+# APIs
 
 1. To register a user
 
