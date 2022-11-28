@@ -22,6 +22,9 @@ class RegisterTestCase(APITestCase):
 class LoginTestCase(APITestCase):
     def setUp(self):
         self.user=User.objects.create_user(username="testcase",password="Test@@@123")
+        new_token = Token.objects.create(user=self.user)
+
+        self.token = Token.objects.get(user=self.user)
 
     def test_login(self):
         data={
@@ -29,4 +32,16 @@ class LoginTestCase(APITestCase):
             'password':"Test@@@123"
         }
         response=self.client.post(reverse('login'),data)
+        self.assertEqual(response.status_code,status.HTTP_200_OK)
+
+class Test_logout(APITestCase):
+    def setUp(self):
+        self.user=User.objects.create_user(username="testcase",password="Test@@@123")
+        new_token = Token.objects.create(user=self.user)
+
+        self.token = Token.objects.get(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token '+self.token.key)
+
+    def logout(self):
+        response=self.client.get(reverse('logout'))
         self.assertEqual(response.status_code,status.HTTP_200_OK)
